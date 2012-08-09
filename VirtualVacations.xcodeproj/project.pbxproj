@@ -15,6 +15,7 @@
 		F2E585D115D3FCEB00198F57 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F2E585D015D3FCEB00198F57 /* AppDelegate.m */; };
 		F2E585D415D3FCEB00198F57 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2E585D215D3FCEB00198F57 /* MainStoryboard.storyboard */; };
 		F2E585D715D3FCEB00198F57 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F2E585D615D3FCEB00198F57 /* ViewController.m */; };
+		F2E585E215D3FE1500198F57 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2E585E115D3FE1500198F57 /* CoreData.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 		F2E585D315D3FCEB00198F57 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		F2E585D515D3FCEB00198F57 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		F2E585D615D3FCEB00198F57 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		F2E585E115D3FE1500198F57 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F2E585E215D3FE1500198F57 /* CoreData.framework in Frameworks */,
 				F2E585C115D3FCEB00198F57 /* UIKit.framework in Frameworks */,
 				F2E585C315D3FCEB00198F57 /* Foundation.framework in Frameworks */,
 				F2E585C515D3FCEB00198F57 /* CoreGraphics.framework in Frameworks */,
@@ -50,6 +53,7 @@
 		F2E585B115D3FCEB00198F57 = {
 			isa = PBXGroup;
 			children = (
+				F2E585E115D3FE1500198F57 /* CoreData.framework */,
 				F2E585C615D3FCEB00198F57 /* VirtualVacations */,
 				F2E585BF15D3FCEB00198F57 /* Frameworks */,
 				F2E585BD15D3FCEB00198F57 /* Products */,
@@ -279,6 +283,7 @@
 				F2E585DC15D3FCEB00198F57 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
