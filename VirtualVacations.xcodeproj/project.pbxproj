@@ -1,0 +1,286 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F2E585C115D3FCEB00198F57 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2E585C015D3FCEB00198F57 /* UIKit.framework */; };
+		F2E585C315D3FCEB00198F57 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2E585C215D3FCEB00198F57 /* Foundation.framework */; };
+		F2E585C515D3FCEB00198F57 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2E585C415D3FCEB00198F57 /* CoreGraphics.framework */; };
+		F2E585CB15D3FCEB00198F57 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F2E585C915D3FCEB00198F57 /* InfoPlist.strings */; };
+		F2E585CD15D3FCEB00198F57 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F2E585CC15D3FCEB00198F57 /* main.m */; };
+		F2E585D115D3FCEB00198F57 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F2E585D015D3FCEB00198F57 /* AppDelegate.m */; };
+		F2E585D415D3FCEB00198F57 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2E585D215D3FCEB00198F57 /* MainStoryboard.storyboard */; };
+		F2E585D715D3FCEB00198F57 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F2E585D615D3FCEB00198F57 /* ViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		F2E585BC15D3FCEB00198F57 /* VirtualVacations.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VirtualVacations.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F2E585C015D3FCEB00198F57 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		F2E585C215D3FCEB00198F57 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		F2E585C415D3FCEB00198F57 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		F2E585C815D3FCEB00198F57 /* VirtualVacations-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "VirtualVacations-Info.plist"; sourceTree = "<group>"; };
+		F2E585CA15D3FCEB00198F57 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		F2E585CC15D3FCEB00198F57 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		F2E585CE15D3FCEB00198F57 /* VirtualVacations-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VirtualVacations-Prefix.pch"; sourceTree = "<group>"; };
+		F2E585CF15D3FCEB00198F57 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		F2E585D015D3FCEB00198F57 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		F2E585D315D3FCEB00198F57 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
+		F2E585D515D3FCEB00198F57 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		F2E585D615D3FCEB00198F57 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F2E585B915D3FCEB00198F57 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F2E585C115D3FCEB00198F57 /* UIKit.framework in Frameworks */,
+				F2E585C315D3FCEB00198F57 /* Foundation.framework in Frameworks */,
+				F2E585C515D3FCEB00198F57 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F2E585B115D3FCEB00198F57 = {
+			isa = PBXGroup;
+			children = (
+				F2E585C615D3FCEB00198F57 /* VirtualVacations */,
+				F2E585BF15D3FCEB00198F57 /* Frameworks */,
+				F2E585BD15D3FCEB00198F57 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F2E585BD15D3FCEB00198F57 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F2E585BC15D3FCEB00198F57 /* VirtualVacations.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F2E585BF15D3FCEB00198F57 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F2E585C015D3FCEB00198F57 /* UIKit.framework */,
+				F2E585C215D3FCEB00198F57 /* Foundation.framework */,
+				F2E585C415D3FCEB00198F57 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F2E585C615D3FCEB00198F57 /* VirtualVacations */ = {
+			isa = PBXGroup;
+			children = (
+				F2E585CF15D3FCEB00198F57 /* AppDelegate.h */,
+				F2E585D015D3FCEB00198F57 /* AppDelegate.m */,
+				F2E585D215D3FCEB00198F57 /* MainStoryboard.storyboard */,
+				F2E585D515D3FCEB00198F57 /* ViewController.h */,
+				F2E585D615D3FCEB00198F57 /* ViewController.m */,
+				F2E585C715D3FCEB00198F57 /* Supporting Files */,
+			);
+			path = VirtualVacations;
+			sourceTree = "<group>";
+		};
+		F2E585C715D3FCEB00198F57 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F2E585C815D3FCEB00198F57 /* VirtualVacations-Info.plist */,
+				F2E585C915D3FCEB00198F57 /* InfoPlist.strings */,
+				F2E585CC15D3FCEB00198F57 /* main.m */,
+				F2E585CE15D3FCEB00198F57 /* VirtualVacations-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F2E585BB15D3FCEB00198F57 /* VirtualVacations */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F2E585DA15D3FCEB00198F57 /* Build configuration list for PBXNativeTarget "VirtualVacations" */;
+			buildPhases = (
+				F2E585B815D3FCEB00198F57 /* Sources */,
+				F2E585B915D3FCEB00198F57 /* Frameworks */,
+				F2E585BA15D3FCEB00198F57 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = VirtualVacations;
+			productName = VirtualVacations;
+			productReference = F2E585BC15D3FCEB00198F57 /* VirtualVacations.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F2E585B315D3FCEB00198F57 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0440;
+				ORGANIZATIONNAME = "Norimasa Nabeta";
+			};
+			buildConfigurationList = F2E585B615D3FCEB00198F57 /* Build configuration list for PBXProject "VirtualVacations" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = F2E585B115D3FCEB00198F57;
+			productRefGroup = F2E585BD15D3FCEB00198F57 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F2E585BB15D3FCEB00198F57 /* VirtualVacations */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F2E585BA15D3FCEB00198F57 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F2E585CB15D3FCEB00198F57 /* InfoPlist.strings in Resources */,
+				F2E585D415D3FCEB00198F57 /* MainStoryboard.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F2E585B815D3FCEB00198F57 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F2E585CD15D3FCEB00198F57 /* main.m in Sources */,
+				F2E585D115D3FCEB00198F57 /* AppDelegate.m in Sources */,
+				F2E585D715D3FCEB00198F57 /* ViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		F2E585C915D3FCEB00198F57 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F2E585CA15D3FCEB00198F57 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		F2E585D215D3FCEB00198F57 /* MainStoryboard.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F2E585D315D3FCEB00198F57 /* en */,
+			);
+			name = MainStoryboard.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		F2E585D815D3FCEB00198F57 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		F2E585D915D3FCEB00198F57 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F2E585DB15D3FCEB00198F57 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "VirtualVacations/VirtualVacations-Prefix.pch";
+				INFOPLIST_FILE = "VirtualVacations/VirtualVacations-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		F2E585DC15D3FCEB00198F57 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "VirtualVacations/VirtualVacations-Prefix.pch";
+				INFOPLIST_FILE = "VirtualVacations/VirtualVacations-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F2E585B615D3FCEB00198F57 /* Build configuration list for PBXProject "VirtualVacations" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F2E585D815D3FCEB00198F57 /* Debug */,
+				F2E585D915D3FCEB00198F57 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F2E585DA15D3FCEB00198F57 /* Build configuration list for PBXNativeTarget "VirtualVacations" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F2E585DB15D3FCEB00198F57 /* Debug */,
+				F2E585DC15D3FCEB00198F57 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F2E585B315D3FCEB00198F57 /* Project object */;
+}
