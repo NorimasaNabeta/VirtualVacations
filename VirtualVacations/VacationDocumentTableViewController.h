@@ -11,6 +11,6 @@
 
 #define DEFAULT_DOCUMENT_TITLE @"My Vacation"
 
-@interface VacationDocumentTableViewController : CoreDataTableViewController
+@interface VacationDocumentTableViewController : UITableViewController
 @property (nonatomic,strong) UIManagedDocument *photoDatabase;
 @end

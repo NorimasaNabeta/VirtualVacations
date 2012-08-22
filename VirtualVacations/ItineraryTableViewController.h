@@ -11,4 +11,5 @@
 
 @interface ItineraryTableViewController : CoreDataTableViewController
 @property (nonatomic,strong) UIManagedDocument *photoDatabase;
+@property (nonatomic,strong) NSURL *urlDocument;
 @end

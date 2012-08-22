@@ -13,5 +13,13 @@
 #define TITLE_TAGSEARCH @"Tag Search"
 
 @interface VacationDocumentTypeViewController : UITableViewController
-@property (nonatomic,strong) UIManagedDocument *photoDatabase;
+//@property (nonatomic,strong) UIManagedDocument *photoDatabase;
+@property (nonatomic,strong) NSURL *urlDocument;
 @end
+
+// NSFetchedResultsControllerDelegate
+// – controllerWillChangeContent:
+// – controller:didChangeObject:atIndexPath:forChangeType:newIndexPath:
+// – controller:didChangeSection:atIndex:forChangeType:
+// **– controllerDidChangeContent:
+// NSFetchedResultsController during a call to -controllerDidChangeContent:.  attempt to insert row 2 into section 0, but there are only 2 rows in section 0 after the update with userInfo (null)

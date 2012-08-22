@@ -7,6 +7,7 @@
 //
 
 #import "VacationDocumentTypeViewController.h"
+
 #import "ItineraryTableViewController.h"
 #import "TagSearchTableViewController.h"
 
@@ -15,14 +16,14 @@
 @end
 
 @implementation VacationDocumentTypeViewController
-@synthesize photoDatabase=_photoDatabase;
+// @synthesize photoDatabase=_photoDatabase;
 
-- (void)setPhotoDatabase:(UIManagedDocument *)photoDatabase
+- (void) viewWillAppear:(BOOL)animated
 {
-    if (_photoDatabase != photoDatabase) {
-        _photoDatabase = photoDatabase;
-        NSLog(@"Itinerary/TagSearch: set database");
-    }
+    [super viewWillAppear:animated];
+//     if (!self.photoDatabase) {
+//         self.photoDatabase = [[UIManagedDocument alloc] initWithFileURL:self.urlDocument];
+//    }
 }
 
 
@@ -35,6 +36,7 @@
     }
     return self;
 }
+
 
 - (void)viewDidLoad
 {
@@ -58,6 +60,7 @@
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
+
 
 #pragma mark - Table view data source
 /*
@@ -116,11 +119,11 @@
 {
     if ([segue.identifier isEqualToString:@"Document Itinerary Show"]) {
         // NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        [segue.destinationViewController setPhotoDatabase:self.photoDatabase];
+        [segue.destinationViewController setUrlDocument:self.urlDocument];
     }
     if ([segue.identifier isEqualToString:@"Document TagSearch Show"]) {
         // NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        [segue.destinationViewController setPhotoDatabase:self.photoDatabase];
+        [segue.destinationViewController setUrlDocument:self.urlDocument];
     }
 }
 
