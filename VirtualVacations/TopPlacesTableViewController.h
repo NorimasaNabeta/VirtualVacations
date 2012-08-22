@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+//#import "CoreDataTableViewController.h"
 
 @interface TopPlacesTableViewController : UITableViewController // <UISplitViewControllerDelegate>
 @property (nonatomic,strong) NSArray *topPlaces;
 @end
+
+//@interface TopPlacesTableViewController : CoreDataTableViewController
+//@property (nonatomic,strong) NSArray *topPlaces;
+//@property (nonatomic,strong) UIManagedDocument *photoDatabase;
+//@end

@@ -1,62 +1,38 @@
 //
-//  TopPlacesTableViewController.m
-//  FlickrFetcher
+//  VacationDocumentTableViewController.m
+//  VirtualVacations
 //
-//  Created by Norimasa Nabeta on 2012/07/27.
+//  Created by Norimasa Nabeta on 2012/08/22.
 //  Copyright (c) 2012年 Norimasa Nabeta. All rights reserved.
 //
 
-#import "TopPlacesTableViewController.h"
+#import "VacationDocumentTableViewController.h"
 #import "FlickrFetcher.h"
-#import "DetailPlacesTableViewController.h"
-#import "PlaceMapViewController.h"
-#import "FlickrPlaceAnnotation.h"
-#import "FlickrPhotoViewController.h"
-
-#import "PlaceTableViewController.h"
 #import "Photo+Flickr.h"
 #import "Place.h"
+#import "VacationDocumentTypeViewController.h"
 
-@interface TopPlacesTableViewController ()
-@property (nonatomic,strong) NSMutableDictionary *nations;
+@interface VacationDocumentTableViewController ()
+
 @end
 
-@implementation TopPlacesTableViewController
-@synthesize topPlaces=_topPlaces;
-@synthesize nations=_nations;
+@implementation VacationDocumentTableViewController
+@synthesize photoDatabase=_photoDatabase;
 
-// @synthesize photoDatabase=_photoDatabase;
-
-- (NSArray*) topPlaces
-{
-    if(! _topPlaces){
-        _topPlaces = [[NSArray alloc] init];
-    }
-    return _topPlaces;
-}
--(void) setTopPlaces:(NSArray *)topPlaces
-{
-    if(_topPlaces != topPlaces){
-        _topPlaces = topPlaces;
-        if (self.tableView.window) [self.tableView reloadData];
-    }
-}
-
-/*
 // 4. Stub this out (we didn't implement it at first)
 // 13. Create an NSFetchRequest to get all Photographers and hook it up to our table via an NSFetchedResultsController
 // (we inherited the code to integrate with NSFRC from CoreDataTableViewController)
 
 - (void)setupFetchedResultsController // attaches an NSFetchRequest to this UITableViewController
 {
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Place"];
-    request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Photo"];
+    request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
     // no predicate because we want ALL the Photographers
-
+    /* -- 13 -- */
     self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
                                                                         managedObjectContext:self.photoDatabase.managedObjectContext
                                                                           sectionNameKeyPath:nil
-                                                                            cacheName:nil];
+                                                                                   cacheName:nil];
     
 }
 
@@ -118,7 +94,7 @@
         [self useDocument];
     }
 }
-*/
+
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -127,48 +103,6 @@
         // Custom initialization
     }
     return self;
-}
-
-- (IBAction)refresh:(id)sender {
-    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    [spinner startAnimating];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
-    
-    dispatch_queue_t downloadQueue = dispatch_queue_create("flickr downloader", NULL);
-    dispatch_async(downloadQueue, ^{
-        NSArray *topPlaces = [FlickrFetcher topPlaces];
-        NSLog(@"Download cont: %d", [topPlaces count]);
-        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:FLICKR_PLACE_NAME ascending:YES];
-        NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-        NSArray *sortedTopPlaces = [topPlaces sortedArrayUsingDescriptors:sortDescriptors];
-
-        NSMutableDictionary *nationDict = [[NSMutableDictionary alloc] init];
-        for (NSDictionary* place in topPlaces) {
-            NSString* nationTag = [FlickrFetcher nationPlace:place];
-            NSMutableArray *tmp = [nationDict objectForKey:nationTag];
-            if (tmp == nil) {
-                tmp = [[NSMutableArray alloc] initWithObjects:place, nil];
-            } else {
-                [tmp addObject:place];
-            }
-            [nationDict setObject:tmp forKey:nationTag];
-        }
-        for (NSString *section in [nationDict allKeys]){
-            NSArray *unsortedArray = [nationDict objectForKey:section];
-            NSArray *sortedArray = [unsortedArray sortedArrayUsingDescriptors:sortDescriptors];
-            [nationDict setObject:sortedArray forKey:section];
-        }
-        
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            //self.navigationItem.rightBarButtonItem = sender;
-            self.navigationItem.leftBarButtonItem = sender;
-            self.topPlaces = sortedTopPlaces;
-            self.nations = nationDict;
-            [self.tableView reloadData];
-        });
-    });
-    dispatch_release(downloadQueue);
 }
 
 - (void)viewDidLoad
@@ -180,79 +114,115 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSArray *recents = [defaults arrayForKey:FAVORITES_KEY];
-    if (! recents){
-        recents = [NSMutableArray array];
-    }
-    UITabBarItem *barItem = [[self.tabBarController.viewControllers objectAtIndex:1] tabBarItem];
-    barItem.badgeValue = [NSString stringWithFormat:@"%d", [recents count]];
 }
-
-/*
+/* */
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    if (!self.photoDatabase) {  // for demo purposes, we'll create a default database if none is set
+    if (!self.photoDatabase) {
+        // for demo purposes, we'll create a default database if none is set
         NSURL *url = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-        url = [url URLByAppendingPathComponent:@"Default Photo Database"];
+        url = [url URLByAppendingPathComponent:DEFAULT_DOCUMENT_TITLE];
         // url is now "<Documents Directory>/Default Photo Database"
-        self.photoDatabase = [[UIManagedDocument alloc] initWithFileURL:url]; // setter will create this for us on disk
+        // setter will create this for us on disk
+        self.photoDatabase = [[UIManagedDocument alloc] initWithFileURL:url];
     }
 }
-*/
+
 
 - (void)viewDidUnload
 {
     [super viewDidUnload];
+    // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return YES;
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 #pragma mark - Table view data source
-- (NSInteger)tableView:(UITableView *)tableView
- numberOfRowsInSection:(NSInteger)section
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.nations count];
+    return 1;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView
-         cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Top Places Cell";
+    static NSString *CellIdentifier = @"Document Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     // Configure the cell...
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    NSArray *sortedArray = [[self.nations allKeys] sortedArrayUsingComparator:^(NSString* a, NSString* b) {
-       return [a compare:b options:NSNumericSearch];
-    }];
-    NSString *title = [sortedArray objectAtIndex:indexPath.row];
-    cell.textLabel.text = title;
+    if (indexPath.row == 0) {
+        cell.textLabel.text = DEFAULT_DOCUMENT_TITLE;
+    }
     
     return cell;
 }
 
+/*
+// Override to support conditional editing of the table view.
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Return NO if you do not want the specified item to be editable.
+    return YES;
+}
+*/
+
+/*
+// Override to support editing the table view.
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        // Delete the row from the data source
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    }   
+    else if (editingStyle == UITableViewCellEditingStyleInsert) {
+        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+    }   
+}
+*/
+
+/*
+// Override to support rearranging the table view.
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+{
+}
+*/
+
+/*
+// Override to support conditional rearranging of the table view.
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Return NO if you do not want the item to be re-orderable.
+    return YES;
+}
+*/
 
 #pragma mark - Table view delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Navigation logic may go here. Create and push another view controller.
+    /*
+     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
+     // ...
+     // Pass the selected object to the new view controller.
+     [self.navigationController pushViewController:detailViewController animated:YES];
+     */
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"Place List View"]) {
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        NSLog(@"Detail:indexPath %@", indexPath);
-
+    if ([segue.identifier isEqualToString:@"Document Show"]) {
+        // NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        // NSLog(@"Detail:indexPath %@", indexPath);
         
-        NSArray *sortedArray = [[self.nations allKeys] sortedArrayUsingComparator:^(NSString* a, NSString* b) {
-            return [a compare:b options:NSNumericSearch];
-        }];
-        NSString *title = [sortedArray objectAtIndex:indexPath.row];
-        NSArray *places = [self.nations objectForKey:title];
-        [segue.destinationViewController setPlaces:places ];
+        [segue.destinationViewController setPhotoDatabase:self.photoDatabase];
     }
 }
 
