@@ -15,11 +15,17 @@
 
 @synthesize imageView = _imageView;
 @synthesize imageURL = _imageURL;
-@synthesize swVisited = _swVisited;
+@synthesize navbtnVisit = _navbtnVisit;
 @synthesize delegate = _delegate;
 
-- (IBAction)visitedChange:(UISwitch *)sender {
-    [self.delegate setImageStatus:self status:sender.on];
+- (IBAction)visitPressed:(id)sender {
+    if ([self.navbtnVisit.title isEqualToString:@"Visit"]) {
+        [self.delegate setImageStatus:self status:YES];
+        self.navbtnVisit.title = @"Unvisit";
+    } else {
+        [self.delegate setImageStatus:self status:NO];
+        self.navbtnVisit.title = @"Visit";        
+    }
 }
 
 - (void)loadImage
@@ -56,10 +62,11 @@
 {
     [super viewWillAppear:animated];
     if (!self.imageView.image && self.imageURL) [self loadImage];
-    self.swVisited.on = NO;
-    if( [self.delegate getImageStatus:self] ){
-        self.swVisited.on = YES;
+    self.navbtnVisit.title = @"Visit";    
+    if ([self.delegate getImageStatus:self]) {
+        self.navbtnVisit.title = @"Unvisit";
     }
+
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -70,7 +77,7 @@
 - (void)viewDidUnload
 {
     self.imageView = nil;
-    [self setSwVisited:nil];
+    [self setNavbtnVisit:nil];
     [super viewDidUnload];
 }
 

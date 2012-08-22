@@ -17,6 +17,6 @@
 @interface ImageViewController : UIViewController
 
 @property (nonatomic, strong) NSURL *imageURL;
-@property (weak, nonatomic) IBOutlet UISwitch *swVisited;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *navbtnVisit;
 @property (nonatomic, strong) id delegate;
 @end

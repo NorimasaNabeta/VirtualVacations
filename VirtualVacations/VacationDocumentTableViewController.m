@@ -26,16 +26,20 @@
     return self;
 }
 
+// c.f. Hint#4
+// You might find the NSFileManager method contentsOfDirectoryAtURL:includingPropertiesForKeys:options:error:
+// useful for finding out what vacations the user has (even though you’re only going to actually create one vacation,
+// you have to write the code as if you support any number of them).
+// TODO: don't pick Cache directory
 - (void) checkSandbox
 {
-    NSURL *url = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
     NSError *error;
+    NSURL *url = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
     NSArray *fileList = [[NSFileManager defaultManager] contentsOfDirectoryAtURL:url includingPropertiesForKeys:nil options:NSDirectoryEnumerationSkipsHiddenFiles error:&error];
     if ([fileList count] == 0) {
         NSString *title = DEFAULT_DOCUMENT_TITLE;
         NSURL *url = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-        url = [url URLByAppendingPathComponent:title];
-        self.documentfiles = [[NSArray alloc] initWithObjects:url, nil];
+        self.documentfiles = [[NSArray alloc] initWithObjects:[url URLByAppendingPathComponent:title], nil];
     } else {
         self.documentfiles = fileList;
     }

@@ -5,6 +5,20 @@
 //  Copyright 2011 Stanford University. All rights reserved.
 //
 
+// Hint#23
+// You do not have to use the provided CoreDataTableViewController for this assignment,
+// but it’s extremely likely you’ll want to!
+// Its implementation is mostly just copy/pasted from the documentation of NSFetchedResultsController.
+// It’s very easy to subclass and use.
+// The only thing you have to do to make it work is to set the fetchedResultsControllerproperty.
+// The only UITableViewDataSource method you’re going to have to implement is tableView:cellForRowAtIndexPath:
+// You’ll also want to implement tableView:didSelectRowAtIndexPath: and/or prepareForSegue:sender:
+// Using the method objectAtIndexPath:on self.fetchedResultsController is wonderful for implementing these
+
+
+// http://www.informit.com/articles/article.aspx?p=1842295&seqNum=10￼
+
+
 #import "CoreDataTableViewController.h"
 
 @interface CoreDataTableViewController()

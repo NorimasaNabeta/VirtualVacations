@@ -9,6 +9,7 @@
 #import "Photo+Flickr.h"
 #import "FlickrFetcher.h"
 #import "Place+Create.h"
+#import "Tag+Create.h"
 
 @implementation Photo (Flickr)
 
@@ -53,6 +54,23 @@
         photo.subtitle = [flickrInfo valueForKeyPath:FLICKR_PHOTO_DESCRIPTION];
         photo.imageURL = [[FlickrFetcher urlForPhoto:flickrInfo format:FlickrPhotoFormatLarge] absoluteString];
         photo.place = [Place placeWithName:[flickrInfo objectForKey:FLICKR_PLACE_ID] inManagedObjectContext:context];
+        
+        // photo.tag = [Tag tagWithName:[flickrInfo objectForKey:FLICKR_TAGS] inManagedObjectContext:context];
+        // TODO: FIX IT!
+        NSString *tagWork = [flickrInfo objectForKey:FLICKR_TAGS];
+        NSArray *tagParts = [tagWork componentsSeparatedByString:@" "];
+        NSMutableArray *checked = [[NSMutableArray alloc] initWithObjects: nil];
+        for (NSString *part in tagParts){
+            NSLog(@"ADD: %@ %@", part, [checked description]);
+            if ([part rangeOfString:@":"].length == NSNotFound){ // <-- NOT WORKING!!!
+                [checked addObject:part];
+            }
+        }
+        NSString *tagCooked = [[checked copy] componentsJoinedByString:@" "];
+        
+        // NSUTF8StringEncoding = 4,
+        
+        photo.tag = [Tag tagWithName:tagCooked inManagedObjectContext:context];
         // NSLog(@"Photo: %@", photo.imageURL);
     } else {
         photo = [matches lastObject];

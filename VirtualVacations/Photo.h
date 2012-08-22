@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Place;
+@class Place, Tag;
 
 @interface Photo : NSManagedObject
 
@@ -18,6 +18,8 @@
 @property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSString * unique;
 @property (nonatomic, retain) NSNumber * visited;
+@property (nonatomic, retain) NSDate * visitDate;
 @property (nonatomic, retain) Place *place;
+@property (nonatomic, retain) Tag *tag;
 
 @end

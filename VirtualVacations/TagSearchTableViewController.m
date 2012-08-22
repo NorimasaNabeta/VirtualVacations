@@ -59,6 +59,10 @@
 {
     dispatch_queue_t fetchQ = dispatch_queue_create("Flickr fetcher", NULL);
     dispatch_async(fetchQ, ^{
+        // ------
+        // NSArray *topPlaces = [FlickrFetcher topPlaces];
+        // NSArray *detailPlaces = [FlickrFetcher photosInPlace:place maxResults:50];
+
         NSArray *photos = [FlickrFetcher recentGeoreferencedPhotos];
         [document.managedObjectContext performBlock:^{ // perform in the NSMOC's safe thread (main thread)
             for (NSDictionary *flickrInfo in photos) {

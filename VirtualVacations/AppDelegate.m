@@ -9,6 +9,49 @@
 #import "AppDelegate.h"
 
 @implementation AppDelegate
+@synthesize imageCache = _imageCache;
+
+// http://stackoverflow.com/questions/7598820/correct-singleton-pattern-objective-c-ios
+// http://stackoverflow.com/questions/11691789/nscache-does-removeallobjects-release-the-memory-usage-im-using-arc
+//
+//
+- (NSCache*) imageCache
+{
+    if(_imageCache == nil){
+        _imageCache = [[NSCache alloc] init];
+        [_imageCache setName:@"FlickrThumbnailImageCache"];
+        [_imageCache setCountLimit:100];
+        [_imageCache setTotalCostLimit:1500000];
+        [_imageCache setEvictsObjectsWithDiscardedContent:YES];
+    }
+    return _imageCache;
+}
+
+/*
+ NSURL *url = [FlickrFetcher urlForPhoto:photo format:FlickrPhotoFormatSquare];
+ NSData *data = [NSData dataWithContentsOfURL:url];
+
+ 
+id appDelegate = (id)[[UIApplication sharedApplication] delegate];
+ NSString *idThumbnail = [FlickrFetcher stringValueFromKey:photo nameKey:FLICKR_PHOTO_ID];
+UIImage *image = [[appDelegate imageCache] objectForKey:idThumbnail];
+if (image) {
+    // NSLog(@"HIT user:%@ screen:%@", tweetuser, tweetscreenuser);
+    cell.imageView.image = image;
+}
+else {
+  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    NSURL *url = [FlickrFetcher urlForPhoto:photo format:FlickrPhotoFormatSquare];
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    [[appDelegate imageCache] setObject:[UIImage imageWithData:data] forKey:idThumbnail];
+    dispatch_sync(dispatch_get_main_queue(), ^{
+       [cell.imageView setImage:[UIImage imageWithData:data]];
+       [self.tableView reloadData];
+    });
+  });
+}
+*/
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
