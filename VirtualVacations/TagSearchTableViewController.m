@@ -11,9 +11,11 @@
 #import "Photo+Flickr.h"
 #import "Photo.h"
 #import "Place.h"
+#import "ImageViewController.h"
 
-@interface TagSearchTableViewController ()
 
+@interface TagSearchTableViewController () <ImageViewControllerDelegate>
+@property (nonatomic) Photo *currentPhoto;
 @end
 
 @implementation TagSearchTableViewController
@@ -215,7 +217,8 @@
 {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
     Photo *photo = [self.fetchedResultsController objectAtIndexPath:indexPath];
-
+    self.currentPhoto = photo;
+    
     // be somewhat generic here (slightly advanced usage)
     // we'll segue to ANY view controller that has a photographer @property
     if ([segue.destinationViewController respondsToSelector:@selector(setImageURL:)]) {
@@ -223,9 +226,28 @@
         // (which is acceptable here because we used introspection to be sure this is okay)
   
         NSURL *url = [NSURL URLWithString:photo.imageURL];
+        [segue.destinationViewController performSelector:@selector(setDelegate:) withObject:self];
         [segue.destinationViewController performSelector:@selector(setImageURL:) withObject:url];
     }
 
+}
+
+#pragma mark - ImageViewControllerDelegate
+- (BOOL) getImageStatus:(ImageViewController *)sender
+{
+    BOOL result = NO;
+ 
+    if (self.currentPhoto){
+        result = [self.currentPhoto.visited boolValue];
+    }
+
+    return result;
+}
+- (void)setImageStatus:(ImageViewController *)sender status:(BOOL) sw
+{
+    if (self.currentPhoto){
+        self.currentPhoto.visited = [NSNumber numberWithBool:sw];
+    }    
 }
 
 @end

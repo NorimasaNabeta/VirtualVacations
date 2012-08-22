@@ -17,6 +17,7 @@
 @property (nonatomic, retain) NSString * subtitle;
 @property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSString * unique;
+@property (nonatomic, retain) NSNumber * visited;
 @property (nonatomic, retain) Place *place;
 
 @end

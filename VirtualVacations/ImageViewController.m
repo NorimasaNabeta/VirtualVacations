@@ -15,6 +15,12 @@
 
 @synthesize imageView = _imageView;
 @synthesize imageURL = _imageURL;
+@synthesize swVisited = _swVisited;
+@synthesize delegate = _delegate;
+
+- (IBAction)visitedChange:(UISwitch *)sender {
+    [self.delegate setImageStatus:self status:sender.on];
+}
 
 - (void)loadImage
 {
@@ -50,6 +56,10 @@
 {
     [super viewWillAppear:animated];
     if (!self.imageView.image && self.imageURL) [self loadImage];
+    self.swVisited.on = NO;
+    if( [self.delegate getImageStatus:self] ){
+        self.swVisited.on = YES;
+    }
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -60,6 +70,7 @@
 - (void)viewDidUnload
 {
     self.imageView = nil;
+    [self setSwVisited:nil];
     [super viewDidUnload];
 }
 

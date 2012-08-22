@@ -16,6 +16,7 @@
 @dynamic subtitle;
 @dynamic title;
 @dynamic unique;
+@dynamic visited;
 @dynamic place;
 
 @end
