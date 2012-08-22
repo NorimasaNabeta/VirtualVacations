@@ -27,7 +27,7 @@
     }
     return _places;
 }
--(void) setplaces:(NSArray *)places
+-(void) setPlaces:(NSArray *)places
 {
     if(_places != places){
         _places = places;

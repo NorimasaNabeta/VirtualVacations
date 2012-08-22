@@ -86,7 +86,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue
                  sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"Map Photo View"]) {
+    if ([segue.identifier isEqualToString:@"PhotoMap Photo Show"]) {
         FlickrPhotoAnnotation *anno = [self.mapView.selectedAnnotations objectAtIndex:0];
         [segue.destinationViewController setPhoto:anno.photo];
     }
@@ -104,7 +104,7 @@ calloutAccessoryControlTapped:(UIControl *)control
         FlickrPhotoAnnotation *anno = [self.mapView.selectedAnnotations objectAtIndex:0];
         [photoVC setPhoto:anno.photo];
     } else {
-        [self performSegueWithIdentifier:@"Map Photo View" sender:self];
+        [self performSegueWithIdentifier:@"PhotoMap Photo Show" sender:self];
     }
 }
 

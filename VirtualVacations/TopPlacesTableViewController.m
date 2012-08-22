@@ -13,6 +13,8 @@
 #import "FlickrPlaceAnnotation.h"
 #import "FlickrPhotoViewController.h"
 
+#import "PlaceTableViewController.h"
+
 @interface TopPlacesTableViewController ()
 @property (nonatomic,strong) NSMutableDictionary *nations;
 @end
@@ -48,15 +50,12 @@
 - (IBAction)refresh:(id)sender {
     UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     [spinner startAnimating];
-    //self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
     
     dispatch_queue_t downloadQueue = dispatch_queue_create("flickr downloader", NULL);
     dispatch_async(downloadQueue, ^{
         NSArray *topPlaces = [FlickrFetcher topPlaces];
         NSLog(@"Download cont: %d", [topPlaces count]);
-        // topPacces must be display in alphabetical order.
-        // Reuiqred Task #2
         NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:FLICKR_PLACE_NAME ascending:YES];
         NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
         NSArray *sortedTopPlaces = [topPlaces sortedArrayUsingDescriptors:sortDescriptors];
@@ -111,8 +110,6 @@
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -121,33 +118,10 @@
 }
 
 #pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    // NSLog(@"SECTION: %d",[[self.nations allKeys] count] );
-    return [[self.nations allKeys] count];
-}
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    NSArray *sortedArray = [[self.nations allKeys] sortedArrayUsingComparator:^(NSString* a, NSString* b) {
-        return [a compare:b options:NSNumericSearch];
-    }];
-    NSString *title = [sortedArray objectAtIndex:section];
-    return title;
-}
-
-
 - (NSInteger)tableView:(UITableView *)tableView
  numberOfRowsInSection:(NSInteger)section
 {
-    NSArray *sortedArray = [[self.nations allKeys] sortedArrayUsingComparator:^(NSString* a, NSString* b) {
-        return [a compare:b options:NSNumericSearch];
-    }];    
-    NSString *title = [sortedArray objectAtIndex:section];
-    NSArray *places = [self.nations objectForKey:title];
-    return [places count];
-    
-    //return [self.topPlaces count];
+    return [self.nations count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
@@ -163,42 +137,17 @@
     NSArray *sortedArray = [[self.nations allKeys] sortedArrayUsingComparator:^(NSString* a, NSString* b) {
        return [a compare:b options:NSNumericSearch];
     }];
-    NSString *title = [sortedArray objectAtIndex:indexPath.section];
-    NSArray *places = [self.nations objectForKey:title];
-    NSDictionary *place = [places objectAtIndex:indexPath.row];
-    cell.textLabel.text = [FlickrFetcher namePlace:place];
-    cell.detailTextLabel.text = [place valueForKeyPath:FLICKR_PLACE_NAME];
-
-    // NSDictionary *place = [self.topPlaces objectAtIndex:indexPath.row];
-    // cell.textLabel.text = [FlickrFetcher namePlace:place];
-    // cell.detailTextLabel.text = [place valueForKeyPath:FLICKR_PLACE_NAME];
-
+    NSString *title = [sortedArray objectAtIndex:indexPath.row];
+    cell.textLabel.text = title;
+    
     return cell;
 }
 
 
 #pragma mark - Table view delegate
-
-- (void)tableView:(UITableView *)tableView
-didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    id placeVC = [self.splitViewController.viewControllers lastObject];
-    if ([placeVC isKindOfClass:[FlickrPhotoViewController class]]) {
-        [self performSegueWithIdentifier:@"Photo List View" sender:self];
-    }
-    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
-
-// "Detail Disclosure"
--(void)tableView:(UITableView *)tableView
-accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
-{
-}
-
-
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"Photo List View"]) {
+    if ([segue.identifier isEqualToString:@"Place List View"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         NSLog(@"Detail:indexPath %@", indexPath);
 
@@ -206,78 +155,10 @@ accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
         NSArray *sortedArray = [[self.nations allKeys] sortedArrayUsingComparator:^(NSString* a, NSString* b) {
             return [a compare:b options:NSNumericSearch];
         }];
-        NSString *title = [sortedArray objectAtIndex:indexPath.section];
+        NSString *title = [sortedArray objectAtIndex:indexPath.row];
         NSArray *places = [self.nations objectForKey:title];
-        NSDictionary *place = [places objectAtIndex:indexPath.row];
-        
-        //NSDictionary *place = [self.topPlaces objectAtIndex:indexPath.row];
-        
-        [segue.destinationViewController setPlace:place ];
-    }
-    else if ([segue.identifier isEqualToString:@"Place Map View"]) {
-        id detail = segue.destinationViewController;
-        if ([detail isKindOfClass:[PlaceMapViewController class]]) {
-            PlaceMapViewController *mapVC = (PlaceMapViewController *)detail;
-            mapVC.annotations = [self mapAnnotations];
-            // mapVC.title = self.title;
-        }
+        [segue.destinationViewController setPlaces:places ];
     }
 }
-
-- (NSArray *)mapAnnotations
-{
-    NSMutableArray *annotations = [NSMutableArray arrayWithCapacity:[self.topPlaces count]];
-    for (NSDictionary *place in self.topPlaces) {
-        [annotations addObject:[FlickrPlaceAnnotation annotationForPhoto:place]];
-    }
-    return annotations;
-}
-
-
-// TOCHECK: Is really implementing UISplitViewControllerDelegate only to this ViewController?
-//          No need for RecentstableController?
-//
-/*
-#pragma mark - UISplitViewControllerDelegate
--(void) awakeFromNib
-{
-    [super awakeFromNib];
-    self.splitViewController.delegate=self;
-}
-
-#pragma mark - UISplitViewControllerDelegate
--(id <SplitViewBarButtonItemPresenter>) splitViewBarButtonItemPresenter
-{
-    id detailVC = [self.splitViewController.viewControllers lastObject];
-    if (![detailVC conformsToProtocol:@protocol(SplitViewBarButtonItemPresenter)]) {
-        detailVC = nil;
-    }
-    return detailVC;
-}
-
--(BOOL) splitViewController:(UISplitViewController *)svc
-   shouldHideViewController:(UIViewController *)vc
-              inOrientation:(UIInterfaceOrientation)orientation
-{
-    return [self splitViewBarButtonItemPresenter] ? UIInterfaceOrientationIsPortrait(orientation) : NO;
-}
-
--(void) splitViewController:(UISplitViewController *)svc
-     willHideViewController:(UIViewController *)aViewController
-          withBarButtonItem:(UIBarButtonItem *)barButtonItem
-       forPopoverController:(UIPopoverController *)pc
-{
-    barButtonItem.title = @"FlickrFecher"; // self.title;
-    [self splitViewBarButtonItemPresenter].splitViewBarButtonItem = barButtonItem;
-    
-}
-
--(void) splitViewController:(UISplitViewController *)svc
-     willShowViewController:(UIViewController *)aViewController
-  invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem
-{
-    [self splitViewBarButtonItemPresenter].splitViewBarButtonItem = nil;
-}
-*/
 
 @end
