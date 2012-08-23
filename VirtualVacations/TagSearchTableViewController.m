@@ -15,7 +15,6 @@
 
 
 @interface TagSearchTableViewController () <ImageViewControllerDelegate>
-@property (nonatomic) Photo *currentPhoto;
 @end
 
 @implementation TagSearchTableViewController
@@ -40,10 +39,11 @@
     request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
     // no predicate because we want ALL the Photographers
     /* -- 13 -- */
-    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
-                                                                        managedObjectContext:self.photoDatabase.managedObjectContext
-                                                                          sectionNameKeyPath:nil
-                                                                                   cacheName:nil];
+    self.fetchedResultsController = [[NSFetchedResultsController alloc]
+                                     initWithFetchRequest:request
+                                     managedObjectContext:self.photoDatabase.managedObjectContext
+                                     sectionNameKeyPath:nil
+                                            cacheName:nil];
     
 }
 
@@ -221,17 +221,17 @@
 {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
     Photo *photo = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    self.currentPhoto = photo;
     
     // be somewhat generic here (slightly advanced usage)
     // we'll segue to ANY view controller that has a photographer @property
-    if ([segue.destinationViewController respondsToSelector:@selector(setImageURL:)]) {
+    // if ([segue.destinationViewController respondsToSelector:@selector(setImageURL:)]) {
+    if ([segue.destinationViewController respondsToSelector:@selector(setDelegate:)]) {
         // use performSelector:withObject: to send without compiler checking
         // (which is acceptable here because we used introspection to be sure this is okay)
   
         NSURL *url = [NSURL URLWithString:photo.imageURL];
-        [segue.destinationViewController performSelector:@selector(setDelegate:) withObject:self];
         [segue.destinationViewController performSelector:@selector(setImageURL:) withObject:url];
+        [segue.destinationViewController performSelector:@selector(setDelegate:) withObject:self];
     }
 
 }
@@ -241,16 +241,20 @@
 {
     BOOL result = NO;
  
-    if (self.currentPhoto){
-        result = [self.currentPhoto.visited boolValue];
+    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow ];
+    Photo *photo = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    if (photo){
+        result = [photo.visited boolValue];
     }
 
     return result;
 }
 - (void)setImageStatus:(ImageViewController *)sender status:(BOOL) sw
 {
-    if (self.currentPhoto){
-        self.currentPhoto.visited = [NSNumber numberWithBool:sw];
+    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow ];
+    Photo *photo = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    if (photo){
+        photo.visited = [NSNumber numberWithBool:sw];
     }    
 }
 
