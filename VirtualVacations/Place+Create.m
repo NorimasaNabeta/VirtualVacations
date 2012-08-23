@@ -7,6 +7,8 @@
 //
 
 #import "Place+Create.h"
+#import "Itinerary+Create.h"
+
 
 @implementation Place (Create)
 
@@ -29,6 +31,8 @@
         place = [NSEntityDescription insertNewObjectForEntityForName:@"Place"
                                                      inManagedObjectContext:context];
         place.name = name;
+        place.itinerary = [Itinerary itineraryInManagedObjectContext:context];
+        
     } else {
         place = [places lastObject];
     }

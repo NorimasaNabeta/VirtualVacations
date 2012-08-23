@@ -11,13 +11,17 @@
 #import "Photo+Flickr.h"
 #import "Photo.h"
 #import "Place.h"
+#import "Itinerary.h"
+#import "Itinerary+Create.h"
 
 @interface ItineraryTableViewController ()
+@property (nonatomic)     Itinerary *itinerary;
 
 @end
 
 @implementation ItineraryTableViewController
 @synthesize photoDatabase=_photoDatabase;
+@synthesize itinerary=_itinerary;
 
 - (void) viewWillAppear:(BOOL)animated
 {
@@ -33,15 +37,16 @@
 
 - (void)setupFetchedResultsController // attaches an NSFetchRequest to this UITableViewController
 {
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Place"];
-    request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
+    /*
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Itinerary"];
+    // request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
     // no predicate because we want ALL the Photographers
-    /* -- 13 -- */
+    
     self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
                                                                         managedObjectContext:self.photoDatabase.managedObjectContext
                                                                           sectionNameKeyPath:nil
                                                                                    cacheName:nil];
-    
+    */
 }
 
 
@@ -112,6 +117,14 @@
     return self;
 }
 
+- (Itinerary*) itinerary
+{
+    if(_itinerary == nil){
+        _itinerary = [Itinerary itineraryInManagedObjectContext:self.photoDatabase.managedObjectContext];        
+    }
+    return _itinerary;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -136,6 +149,16 @@
 }
 
 #pragma mark - Table view data source
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [self.itinerary.places count];
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Itinerary Cell";
@@ -147,7 +170,8 @@
     }
     
     // ask NSFetchedResultsController for the NSMO at the row in question
-    Place *place = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    // Place *place = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    Place *place = [self.itinerary.places objectAtIndex:indexPath.row];
     // Then configure the cell using it ...
     cell.textLabel.text = place.name;
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%d photos", [place.photos count]];

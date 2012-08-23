@@ -167,7 +167,60 @@
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="2114" y="882"/>
+            <point key="canvasLocation" x="4394" y="138"/>
+        </scene>
+        <!--Vacation Photo Table View Controller - Photo List-->
+        <scene sceneID="Ris-nd-dtg">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QW7-7D-njS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tableViewController id="9vO-kV-8b2" customClass="VacationPhotoTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="1eb-Bg-BLY">
+                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Photo List Cell" textLabel="Bhc-ex-60Z" detailTextLabel="ZPx-HC-qfa" imageView="izO-Ka-t3U" style="IBUITableViewCellStyleSubtitle" id="imS-36-5Jb">
+                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="300" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Bhc-ex-60Z">
+                                            <rect key="frame" x="53" y="2" width="38" height="22"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZPx-HC-qfa">
+                                            <rect key="frame" x="53" y="24" width="47" height="18"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <color key="textColor" red="0.50196078431372548" green="0.50196078431372548" blue="0.50196078431372548" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </label>
+                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="Placeholder.png" id="izO-Ka-t3U">
+                                            <rect key="frame" x="0.0" y="0.0" width="43" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </imageView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <connections>
+                                    <segue destination="3Of-ki-jIu" kind="push" identifier="Photo Show" id="Khx-u6-axH"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="9vO-kV-8b2" id="Vgt-lT-nsJ"/>
+                            <outlet property="delegate" destination="9vO-kV-8b2" id="gbF-Pa-r6N"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Photo List" id="cRn-eU-Km0"/>
+                </tableViewController>
+            </objects>
+            <point key="canvasLocation" x="3043" y="1033"/>
         </scene>
         <!--Image View Controller-->
         <scene sceneID="wXt-wP-k8T">
@@ -198,7 +251,7 @@
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="2913" y="440"/>
+            <point key="canvasLocation" x="3653" y="1049"/>
         </scene>
         <!--Place Table View Controller - place-->
         <scene sceneID="7Uv-Cu-ymS">
@@ -310,7 +363,7 @@
                     <navigationItem key="navigationItem" title="Vacations" id="Lbc-p0-quq"/>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="1368" y="162"/>
+            <point key="canvasLocation" x="1232" y="1002"/>
         </scene>
         <!--Vacation Document Type View Controller - My Vacation-->
         <scene sceneID="41T-Vp-j5W">
@@ -377,7 +430,7 @@
                     <navigationItem key="navigationItem" title="My Vacation" id="NR7-W1-Zcs"/>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="1912" y="127"/>
+            <point key="canvasLocation" x="1708" y="1002"/>
         </scene>
         <!--Tag Search Table View Controller - Tag Search-->
         <scene sceneID="mkd-2D-9lr">
@@ -418,7 +471,7 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <connections>
-                                    <segue destination="3Of-ki-jIu" kind="push" identifier="Image Show" id="0kP-Fn-gcf"/>
+                                    <segue destination="9vO-kV-8b2" kind="push" identifier="TagedPhoto List Show" id="SBU-h7-Im2"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -430,7 +483,7 @@
                     <navigationItem key="navigationItem" title="Tag Search" id="VQM-N8-JQ6"/>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="2427" y="537"/>
+            <point key="canvasLocation" x="2251" y="1294"/>
         </scene>
         <!--Itinerary Table View Controller - Itinarary-->
         <scene sceneID="CWP-q6-Yov">
@@ -480,7 +533,7 @@
                     <navigationItem key="navigationItem" title="Itinarary" id="Bud-Za-PCu"/>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="2375" y="59"/>
+            <point key="canvasLocation" x="2243" y="653"/>
         </scene>
         <!--Recents Table View Controller - Recents-->
         <scene sceneID="Fzh-RY-zLf">
@@ -533,7 +586,7 @@
                     <navigationItem key="navigationItem" title="Recents" id="2tx-eS-QXO"/>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="1368" y="874"/>
+            <point key="canvasLocation" x="1280" y="138"/>
         </scene>
         <!--Top Places Table View Controller - top-->
         <scene sceneID="KeV-w0-3R6">
@@ -650,7 +703,7 @@
                     </connections>
                 </navigationController>
             </objects>
-            <point key="canvasLocation" x="784" y="874"/>
+            <point key="canvasLocation" x="772" y="122"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Xll-Pd-dO6">
@@ -669,7 +722,7 @@
                     </connections>
                 </navigationController>
             </objects>
-            <point key="canvasLocation" x="801" y="162"/>
+            <point key="canvasLocation" x="753" y="994"/>
         </scene>
     </scenes>
     <resources>

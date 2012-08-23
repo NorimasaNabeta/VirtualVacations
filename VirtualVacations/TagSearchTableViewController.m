@@ -11,10 +11,11 @@
 #import "Photo+Flickr.h"
 #import "Photo.h"
 #import "Place.h"
-#import "ImageViewController.h"
+#import "Tag.h"
 
+#import "VacationPhotoTableViewController.h"
 
-@interface TagSearchTableViewController () <ImageViewControllerDelegate>
+@interface TagSearchTableViewController () 
 @end
 
 @implementation TagSearchTableViewController
@@ -35,10 +36,9 @@
 
 - (void)setupFetchedResultsController // attaches an NSFetchRequest to this UITableViewController
 {
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Photo"];
-    request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Tag"];
+    request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
     // no predicate because we want ALL the Photographers
-    /* -- 13 -- */
     self.fetchedResultsController = [[NSFetchedResultsController alloc]
                                      initWithFetchRequest:request
                                      managedObjectContext:self.photoDatabase.managedObjectContext
@@ -157,12 +157,26 @@
     }
     
     // ask NSFetchedResultsController for the NSMO at the row in question
-    Photo *photo = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    Tag *tag = [self.fetchedResultsController objectAtIndexPath:indexPath];
     // Then configure the cell using it ...
-    cell.textLabel.text = photo.title;
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", photo.place.name ];
+    cell.textLabel.text = tag.name;
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"photo: %d", [tag.photos count]];
     
     return cell;
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
+    Tag *tag = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    if ([segue.identifier isEqualToString:@"TagedPhoto List Show"]) {
+        VacationPhotoTableViewController *vc = (VacationPhotoTableViewController*) segue.destinationViewController;
+        [vc setTag:tag];
+        //[segue.destinationViewController setTag:tag];
+    }
+    //    if ([segue.destinationViewController respondsToSelector:@selector(setTag:)]) {
+    //        [segue.destinationViewController performSelector:@selector(setTag:) withObject:tag];
+    //    }
 }
 
 /*
@@ -217,45 +231,6 @@
      */
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
-    Photo *photo = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    
-    // be somewhat generic here (slightly advanced usage)
-    // we'll segue to ANY view controller that has a photographer @property
-    // if ([segue.destinationViewController respondsToSelector:@selector(setImageURL:)]) {
-    if ([segue.destinationViewController respondsToSelector:@selector(setDelegate:)]) {
-        // use performSelector:withObject: to send without compiler checking
-        // (which is acceptable here because we used introspection to be sure this is okay)
-  
-        NSURL *url = [NSURL URLWithString:photo.imageURL];
-        [segue.destinationViewController performSelector:@selector(setImageURL:) withObject:url];
-        [segue.destinationViewController performSelector:@selector(setDelegate:) withObject:self];
-    }
 
-}
-
-#pragma mark - ImageViewControllerDelegate
-- (BOOL) getImageStatus:(ImageViewController *)sender
-{
-    BOOL result = NO;
- 
-    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow ];
-    Photo *photo = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    if (photo){
-        result = [photo.visited boolValue];
-    }
-
-    return result;
-}
-- (void)setImageStatus:(ImageViewController *)sender status:(BOOL) sw
-{
-    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow ];
-    Photo *photo = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    if (photo){
-        photo.visited = [NSNumber numberWithBool:sw];
-    }    
-}
 
 @end

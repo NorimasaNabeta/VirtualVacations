@@ -1,18 +1,17 @@
 //
-//  Tag.m
+//  Itinerary.m
 //  VirtualVacations
 //
 //  Created by Norimasa Nabeta on 2012/08/23.
 //  Copyright (c) 2012年 Norimasa Nabeta. All rights reserved.
 //
 
-#import "Tag.h"
-#import "Photo.h"
+#import "Itinerary.h"
+#import "Place.h"
 
 
-@implementation Tag
+@implementation Itinerary
 
-@dynamic name;
-@dynamic photos;
+@dynamic places;
 
 @end

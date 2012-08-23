@@ -55,22 +55,24 @@
         photo.imageURL = [[FlickrFetcher urlForPhoto:flickrInfo format:FlickrPhotoFormatLarge] absoluteString];
         photo.place = [Place placeWithName:[flickrInfo objectForKey:FLICKR_PLACE_ID] inManagedObjectContext:context];
         
-        // photo.tag = [Tag tagWithName:[flickrInfo objectForKey:FLICKR_TAGS] inManagedObjectContext:context];
-        // TODO: FIX IT!
         NSString *tagWork = [flickrInfo objectForKey:FLICKR_TAGS];
         NSArray *tagParts = [tagWork componentsSeparatedByString:@" "];
-        NSMutableArray *checked = [[NSMutableArray alloc] initWithObjects: nil];
-        for (NSString *part in tagParts){
-            NSLog(@"ADD: %@ %@", part, [checked description]);
-            if ([part rangeOfString:@":"].length == NSNotFound){ // <-- NOT WORKING!!!
-                [checked addObject:part];
-            }
-        }
-        NSString *tagCooked = [[checked copy] componentsJoinedByString:@" "];
-        
+        NSMutableSet *tags = [[NSMutableSet alloc] initWithObjects: nil];
+        // NSString *tagCooked = [[checked copy] componentsJoinedByString:@" "];
         // NSUTF8StringEncoding = 4,
+        for (NSString *part in tagParts){
+            //if ([part rangeOfString:@":"].length == NSNotFound){ // <-- NOT WORKING!!!
+                Tag *check = [Tag tagWithName:part inManagedObjectContext:context];
+                NSLog(@"ADD: %@", part);
+                if( check){
+                    [tags addObject:check];
+                }
+            // } else {
+            //     NSLog(@"SKIP: %@", part);
+            // }
+        }
         
-        photo.tag = [Tag tagWithName:tagCooked inManagedObjectContext:context];
+        photo.tags = tags;
         // NSLog(@"Photo: %@", photo.imageURL);
     } else {
         photo = [matches lastObject];
